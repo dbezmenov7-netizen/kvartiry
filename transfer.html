@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Перенос прежних оценок</title>
+<style>body{font:16px/1.6 -apple-system,BlinkMacSystemFont,sans-serif;max-width:620px;margin:70px auto;padding:24px;color:#172c36;background:#f7f6f2}h1{font-size:28px}button{font:inherit;padding:12px 18px;border:1px solid #216a60;border-radius:8px;color:#216a60;background:white}</style></head>
+<body><h1>Прежние оценки</h1><p id="message">Проверяю оценки, сохранённые в этом браузере…</p><button id="send" hidden>Перенести в редактор на Mac</button>
+<script>
+'use strict';
+const destination='http://127.0.0.1:8765';
+const nonce=new URLSearchParams(location.hash.slice(1)).get('nonce');
+const message=document.getElementById('message');
+let saved;
+try {
+  const raw=localStorage.getItem('denis-flat-ratings:evms6.1794221527762:v1');
+  if(raw)saved=JSON.parse(raw);
+} catch(error){message.textContent='Не удалось прочитать прежние оценки. Открой эту страницу в том браузере, где ты их вводил.';}
+if(!window.opener||!nonce)message.textContent='Открой перенос кнопкой «Прежние оценки» из редактора на Mac.';
+else if(!saved?.apartments)message.textContent='В этом браузере на общей странице прежних оценок нет. Если ты заполнял локальный HTML, открой его и нажми «Открыть редактор на Mac».';
+else {
+  message.textContent='Найдены прежние данные. Они будут перенесены только в редактор на этом Mac; публикация выполняется отдельной кнопкой.';
+  document.getElementById('send').hidden=false;
+}
+document.getElementById('send').addEventListener('click',()=>{
+  window.opener.postMessage({type:'flat-legacy-state',nonce,payload:saved},destination);
+  message.textContent='Данные переданы в редактор. Вернись на его вкладку.';
+  document.getElementById('send').hidden=true;
+});
+</script></body></html>

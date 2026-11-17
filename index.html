@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>24 квартиры — оценка вариантов</title>
+  <title>Оценки квартир</title>
   <style>
     :root { --paper:#f7f6f2; --white:#fff; --ink:#172c36; --muted:#64747a; --line:#e0e5e3; --accent:#216a60; --soft:#edf4f0; --amber:#985e16; --amber-bg:#fbf1df; --input:#fdf9ed; }
     * { box-sizing:border-box; }
@@ -439,7 +439,7 @@
     document.getElementById('title-count').textContent=apartments.length+' '+apartmentUnit;
     document.getElementById('count-stat').textContent=apartments.length;
     document.getElementById('count-unit').textContent=apartmentUnit;
-    document.title=apartments.length+' '+apartmentUnit+' — оценка вариантов';
+    document.title='Оценки квартир';
     document.getElementById('price-difference-count').textContent=apartments.filter(a=>a.price!==a.cardPrice).length;
     document.getElementById('price-stat').textContent=fmt(Math.min(...apartments.map(a=>a.price))/1e6,2)+'–'+fmt(Math.max(...apartments.map(a=>a.price))/1e6,2);
     document.getElementById('area-stat').textContent=fmt(Math.min(...apartments.map(a=>a.area)),1)+'–'+fmt(Math.max(...apartments.map(a=>a.area)),1);
